@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Jeu du pendu</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 2rem;
+		    display: flex;
+		    flex-direction: column;
+		    align-items: center;
+		    justify-content: center;
+		    background-color: #e0fdff;
+      }
+      input {
+        padding: 0.5rem;
+        margin-right: 0.5rem;
+		    margin-top: 0.5rem; 
+      }
+      .word {
+        font-size: larger;
+        letter-spacing: 0.3em;
+      }
+      .letters {
+        display: flex;
+        flex-direction: row;
+      }
+    </style>
+    <!-- Vue 3 CDN -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <h1>Jeu du pendu</h1>
+      <button @click="startGame">Nouvelle partie</button>
+      <div class="gameZone">
+        <form @submit.prevent="guessLetter" v-if="!victory && !defeat">
+          <input type="text" pattern="[A-Za-z\-\s]" v-model="letter">
+          <input type="submit" value="guess">
+        </form>
+        <p class="word">{{ guessedWord }}</p>
+        <div class="letters">
+          <p v-for="le in guessedLetters" :key="le">{{ le }}</p>
+        </div>
+        <pendu :step="mistakes"></pendu>
+        <p class="result" v-if="victory">🎇🎆🎉 You WIN 🎉🎆🎇</p>
+        <p class="result" v-if="defeat">😢 You LOSE 😢</p>
+      </div>
+    </div>
+
+    <!-- Script principal -->
+    <script src="./main.js"></script>
+
+    <!-- Composant pendu -->
+    <script src="./components/pendu.js"></script>
+
+    <!-- Mount App -->
+    <script>
+      const mountedApp = app.mount("#app");
+    </script>
+  </body>
+</html>
