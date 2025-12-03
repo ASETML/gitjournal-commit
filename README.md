@@ -5,135 +5,20 @@ A bash script to create commit that respect etml-inf/gitjournal commit conventio
 - Binary
 - Documentation
 
-## 📘 How to Use This Commit Helper Script
-
-This Bash script simplifies your Git commit workflow by interactively building a structured commit message that includes:
-
-A commit title
-
-Time spent since the last commit (auto-calculated, editable)
-
-A status tag
-
-An optional project tag
-
-Optional multi-line description
-
-It then runs git commit with all these components included.
-
-### 🚀 1. Save the Script
-
-Save the script into a file:
-
-nano git-helper.sh
-
-
-Make it executable:
-
-chmod +x git-helper.sh
-
-### 📂 2. Use It Inside a Git Repository
-
-Before running the script, stage your changes:
-
-git add .
-
-
-or manually:
-
-git add <files>
-
-
-Run the script:
-
-./git-helper.sh
-
-### 🖥️ 3. Interactive Steps
-
-The script will guide you through several prompts:
-
-① Commit Name
-
-You will be asked for the main commit message title:
-
-Commit name: Fix login redirect bug
-
-② Auto Duration Calculation
-
-The script calculates the minutes since your last commit:
-
-Commit duration: 42 min. Is this correct ? (Y/n)
-
-
-Press Enter if correct.
-
-Type n to change it manually:
-
-Absolute value: 30
-
-Add minutes: +5
-
-Subtract minutes: -10
-
-③ Commit Status
-
-Add a short status tag (e.g., done, wip, fix):
-
-Commit status: fix
-
-
-This produces a segment like:
-
-[42] [fix]
-
-④ Project Tag (optional)
-Do you want to add a project (name of the project/N):
-
-
-Enter a project name or press Enter / N to skip.
-
-⑤ Description (optional, multi-line)
-
-You can add one or multiple description lines:
-
-Do you want to add a description (y/N): y
-Line 1 of the description: Adjusted redirect logic
-Add another line? (Y/n): y
-Line 2 of the description: Updated unit tests
-Add another line? (Y/n): n
-
-### 📦 4. Final Commit
-
-The script prints the final command:
-
-git commit -m "Fix login redirect bug" -m "[42] [fix]" -m "{myProject}" -m "Adjusted redirect logic" -m "Updated unit tests" --allow-empty
-
-
-It then executes it automatically.
-
-### 🔄 5. If You Make a Mistake
-
-Undo the last commit but keep your changes:
-
-git reset --soft HEAD~1
-
-
-Edit (rebuild) the last commit:
-
-git commit --rebase
-
-### ✔️ Summary
-
-This script helps you:
-
-Create consistent commit messages
-
-Track time between commits
-
-Tag commits with status and project
-
-Add rich multi-line descriptions
-
-Avoid forgetting git add
-
-Perfect for structured workflows and personal productivity tracking.
+## How to use
+You should first stage the changes to be commited with git add.
+After cloning this repo, execute the script with ./gitjournal-commit.sh in a git bash. This command execute the script without the need to clone the repository: `bash <(curl -s https://raw.githubusercontent.com/ASETML/gitjournal-commit/main/gitjournal-commit.sh)` <br>
+You will then be prompted several things:
+> Avoid using arrow keys as they insert weird caracters !
+- The commit name: feat(a): do b
+- If the auto-calculated duration is correct: if you answer no, you have the possibility to change it. You can either:
+	- Enter an absolute value: for example it is the first commit of the day: 30
+	- Enter time to substract: for example to remove break time: -15
+	- Enter time to add: for example to round up: +3
+- The status of the commit: Usually `Done` or `WIP`
+- The project name: Either you enter a project name or enter `n` not to add one
+- If you want to add a description. If the answer is yes, you will be asked if you want to add another line after every description line added.
+
+Please note that commit can be empty, so here is some useful commands if you made a mistake:
+- `git reset --soft HEAD~1` to delete last commit
+- `git commit --ammend` to modify last commit
