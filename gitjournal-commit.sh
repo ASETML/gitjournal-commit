@@ -2,6 +2,19 @@
 command="git commit"
 line=1
 
+# Check if the script is started in a git repository
+isGitRepo="$(git rev-parse --is-inside-work-tree)"
+
+if [ "$isGitRepo" != true ] ; then
+	echo " "
+	echo "Not in a git repository !"
+    exit 1
+fi
+
+echo " "
+git status
+
+echo " "
 echo "Dont forget to git add"
 
 # --- Load config ---
@@ -37,15 +50,18 @@ if [[ -f "$CONFIG_FILE" ]]; then
 
         # avoid appending duplicate alias lines
         if grep -Eq "^[[:space:]]*alias[[:space:]]+$alias_name=" "$BASHRC" 2>/dev/null || grep -Fq "$script_path" "$BASHRC" 2>/dev/null; then
-            echo "Alias '$alias_name' already present in $BASHRC; not appending."
+            echo " "
+			echo "Alias '$alias_name' already present in $BASHRC; not appending."
         else
             printf "\n# gitjournal-commit alias\n%s\n" "$alias_cmd" >> "$BASHRC" 2>/dev/null || true
-            echo "Alias appended to $BASHRC"
+            echo " "
+			echo "Alias appended to $BASHRC"
         fi
     fi
 fi
 
 # --- Commit name ---
+echo " "
 read -ep "Commit name: " name
 command+=" -m \"$name\""
 
@@ -78,7 +94,7 @@ echo "Final duration: $duration"
 
 # --- Status ---
 if [[ -n "$default_status" ]]; then
-    read -ep "Use default commit status: '$default_status' ? [Y/n]: " status_choice
+    read -ep "Use default commit status: '$default_status' ? (Y/n): " status_choice
     if [[ -z "$status_choice" ]]; then
         status="$default_status"
     elif [[ "$status_choice" =~ ^[nN]$ ]]; then
