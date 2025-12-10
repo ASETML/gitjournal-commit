@@ -78,12 +78,10 @@ echo "Final duration: $duration"
 
 # --- Status ---
 if [[ -n "$default_status" ]]; then
-    read -ep "Commit status? [Enter = use default '$default_status', y = different, N = skip]: " status_choice
+    read -ep "Use default commit status: '$default_status' ? [Y/n]: " status_choice
     if [[ -z "$status_choice" ]]; then
         status="$default_status"
     elif [[ "$status_choice" =~ ^[nN]$ ]]; then
-        status=""
-    elif [[ "$status_choice" =~ ^[yY]$ ]]; then
         read -ep "Commit status: " status
         status=${status:-$default_status}
     else
