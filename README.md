@@ -7,7 +7,7 @@ A bash script to create commit that respect etml-inf/gitjournal commit conventio
 
 ## How to use
 You should first stage the changes to be commited with git add.
-After cloning this repo, execute the script with source gitjournal-commit.sh in a git bash. This command execute the script without the need to clone the repository: `bash <(curl -s https://raw.githubusercontent.com/ASETML/gitjournal-commit/main/gitjournal-commit.sh)` <br>
+After cloning this repo, execute the script with `source gitjournal-commit.sh` in a git bash. This command execute the script without the need to clone the repository: `bash <(curl -s https://raw.githubusercontent.com/ASETML/gitjournal-commit/main/gitjournal-commit.sh)` <br>
 You will then be prompted several things:
 - The commit name: feat(a): do b
 - If the auto-calculated duration is correct: if you answer no, you have the possibility to change it. You can either:
